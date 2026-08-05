@@ -1,0 +1,6 @@
+@media print{
+  body{color:#000;background:#fff}
+  .site-header,.site-footer,.btn{display:none}
+  .card{box-shadow:none;border-radius:0}
+  .container{padding:0}
+}

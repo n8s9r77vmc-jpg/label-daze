@@ -1,0 +1,8 @@
+[build]
+  publish = 
+  "./"
+  command = ""
+
+[context.production.environment]
+  # For safety we embed Firebase config in source; for real deployments consider using environment variables
+  # Example: FIREBASE_API_KEY = "..."
