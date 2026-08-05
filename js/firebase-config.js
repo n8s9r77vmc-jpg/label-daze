@@ -1,6 +1,13 @@
 // Firebase web config and initialization (modular SDK)
+// Consolidated firebase-auth imports and re-exports to avoid multiple remote module fetches
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut as fbSignOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -16,4 +23,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { app, auth, db };
+// Export auth, db, and the auth helper functions so other local modules import from this file only.
+// This keeps the module graph simpler and improves compatibility with mobile Safari.
+export {
+  app,
+  auth,
+  db,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  fbSignOut,
+  onAuthStateChanged
+};
