@@ -1,3 +1,4 @@
+// js/app.js
 // app wiring
 import { signUp, signIn, signOut, onAuthChange } from './auth.js';
 import { addProductForUser, updateProduct, deleteProduct, subscribeToUserProducts } from './products.js';
@@ -29,38 +30,74 @@ const allergensList = document.getElementById('allergens-list');
 renderLabels(labelsList, selectedLabels);
 renderAllergens(allergensList, selectedAllergens);
 
-function showAuthMessage(msg, err=false){
+function showAuthMessage(msg, err = false) {
   authMessage.textContent = msg || '';
   authMessage.style.color = err ? 'var(--danger)' : 'inherit';
+  // ensure it's visible (if you have CSS that hides empty messages)
+  if (msg) authMessage.classList.remove('hide'); else authMessage.classList.add('hide');
 }
 
-signUpForm.addEventListener('submit', async (e)=>{
+// Auth button references for loading UI
+const signUpBtn = signUpForm.querySelector('button[type="submit"]');
+const signInBtn = signInForm.querySelector('button[type="submit"]');
+
+function setAuthLoading(loading, which) {
+  // disable/enable all inputs and buttons in auth forms
+  const elems = [...signUpForm.querySelectorAll('input, button'), ...signInForm.querySelectorAll('input, button')];
+  elems.forEach(el => el.disabled = loading);
+  if (!loading) {
+    signUpBtn.textContent = 'Sign up';
+    signInBtn.textContent = 'Sign in';
+  } else {
+    if (which === 'signup') {
+      signUpBtn.textContent = 'Creating…';
+    } else if (which === 'signin') {
+      signInBtn.textContent = 'Signing in…';
+    } else {
+      signUpBtn.textContent = 'Please wait…';
+      signInBtn.textContent = 'Please wait…';
+    }
+  }
+}
+
+signUpForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('signup-email').value;
   const pw = document.getElementById('signup-password').value;
-  try{
-    await signUp(email,pw);
-  }catch(err){
-    showAuthMessage(err.message, true);
+  setAuthLoading(true, 'signup');
+  showAuthMessage('Creating account…');
+  try {
+    await signUp(email, pw);
+    showAuthMessage('Account created — signed in.');
+  } catch (err) {
+    // show Firebase error message clearly
+    showAuthMessage(err?.message || 'Failed to create account', true);
+  } finally {
+    setAuthLoading(false);
   }
 });
 
-signInForm.addEventListener('submit', async (e)=>{
+signInForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('signin-email').value;
   const pw = document.getElementById('signin-password').value;
-  try{
-    await signIn(email,pw);
-  }catch(err){
-    showAuthMessage(err.message, true);
+  setAuthLoading(true, 'signin');
+  showAuthMessage('Signing in…');
+  try {
+    await signIn(email, pw);
+    showAuthMessage('Signed in.');
+  } catch (err) {
+    showAuthMessage(err?.message || 'Failed to sign in', true);
+  } finally {
+    setAuthLoading(false);
   }
 });
 
-signOutBtn.addEventListener('click', async ()=>{
+signOutBtn.addEventListener('click', async () => {
   await signOut();
 });
 
-function resetProductForm(){
+function resetProductForm() {
   productForm.reset();
   document.getElementById('editing-id').value = '';
   selectedLabels.clear();
@@ -69,62 +106,62 @@ function resetProductForm(){
   renderAllergens(allergensList, selectedAllergens);
 }
 
-productClear.addEventListener('click', ()=> resetProductForm());
+productClear.addEventListener('click', () => resetProductForm());
 
-productForm.addEventListener('submit', async (e)=>{
+productForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if(!currentUser) return showAuthMessage('Please sign in first', true);
+  if (!currentUser) return showAuthMessage('Please sign in first', true);
   const name = document.getElementById('product-name').value.trim();
-  const ingredients = document.getElementById('product-ingredients').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const ingredients = document.getElementById('product-ingredients').value.split(',').map(s => s.trim()).filter(Boolean);
   const notes = document.getElementById('product-notes').value.trim();
   const bestBefore = document.getElementById('best-before').value || null;
   const payload = { name, ingredients, labels: Array.from(selectedLabels), allergens: Array.from(selectedAllergens), notes, bestBefore };
   const editingId = document.getElementById('editing-id').value;
-  try{
-    if(editingId){
+  try {
+    if (editingId) {
       await updateProduct(editingId, payload);
       showAuthMessage('Product updated');
-    }else{
+    } else {
       await addProductForUser(currentUser.uid, payload);
       showAuthMessage('Product saved');
     }
     resetProductForm();
-  }catch(err){
-    showAuthMessage(err.message, true);
+  } catch (err) {
+    showAuthMessage(err?.message || 'Failed to save product', true);
   }
 });
 
-function renderProductList(items){
+function renderProductList(items) {
   productList.innerHTML = '';
-  if(items.length===0){
+  if (items.length === 0) {
     productList.innerHTML = '<li class="muted">No products saved yet.</li>';
     return;
   }
-  items.forEach(p=>{
+  items.forEach(p => {
     const li = document.createElement('li');
     const left = document.createElement('div');
-    left.innerHTML = `<strong>${p.name}</strong><div class="product-meta">${p.ingredients ? p.ingredients.join(', '):''} ${p.bestBefore ? ' · Best before: '+formatDateForDisplay(p.bestBefore):''}</div>`;
+    left.innerHTML = `<strong>${p.name}</strong><div class="product-meta">${p.ingredients ? p.ingredients.join(', ') : ''} ${p.bestBefore ? ' · Best before: ' + formatDateForDisplay(p.bestBefore) : ''}</div>`;
     const actions = document.createElement('div');
     actions.className = 'product-actions';
     const edit = document.createElement('button');
     edit.className = 'btn'; edit.textContent = 'Edit';
-    edit.addEventListener('click', ()=>{
+    edit.addEventListener('click', () => {
       document.getElementById('product-name').value = p.name || '';
-      document.getElementById('product-ingredients').value = (p.ingredients||[]).join(', ');
-      document.getElementById('product-notes').value = p.notes||'';
+      document.getElementById('product-ingredients').value = (p.ingredients || []).join(', ');
+      document.getElementById('product-notes').value = p.notes || '';
       document.getElementById('best-before').value = p.bestBefore ? isoDateInputVal(p.bestBefore) : '';
       document.getElementById('editing-id').value = p.id;
-      selectedLabels.clear(); (p.labels||[]).forEach(l=>selectedLabels.add(l));
-      selectedAllergens.clear(); (p.allergens||[]).forEach(a=>selectedAllergens.add(a));
+      selectedLabels.clear(); (p.labels || []).forEach(l => selectedLabels.add(l));
+      selectedAllergens.clear(); (p.allergens || []).forEach(a => selectedAllergens.add(a));
       renderLabels(labelsList, selectedLabels);
       renderAllergens(allergensList, selectedAllergens);
-      window.scrollTo({top:0,behavior:'smooth'});
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     const del = document.createElement('button');
     del.className = 'btn'; del.textContent = 'Delete';
-    del.addEventListener('click', async ()=>{
-      if(!confirm('Delete this product?')) return;
+    del.addEventListener('click', async () => {
+      if (!confirm('Delete this product?')) return;
       await deleteProduct(p.id);
     });
 
@@ -136,27 +173,27 @@ function renderProductList(items){
   });
 }
 
-onAuthChange(user=>{
+onAuthChange(user => {
   currentUser = user;
-  if(user){
+  if (user) {
     // show product section
-    authSection.querySelectorAll('.auth-form').forEach(f=>f.classList.add('hide'));
+    authSection.querySelectorAll('.auth-form').forEach(f => f.classList.add('hide'));
     document.getElementById('user-info').classList.remove('hide');
     productSection.classList.remove('hide');
     welcomeEl.textContent = `Signed in as ${user.email}`;
     showAuthMessage('');
-    if(unsubscribeProducts) unsubscribeProducts();
+    if (unsubscribeProducts) unsubscribeProducts();
     unsubscribeProducts = subscribeToUserProducts(user.uid, renderProductList);
-  }else{
+  } else {
     // show auth forms
-    authSection.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('hide'));
+    authSection.querySelectorAll('.auth-form').forEach(f => f.classList.remove('hide'));
     document.getElementById('user-info').classList.add('hide');
     productSection.classList.add('hide');
     welcomeEl.textContent = '';
-    if(unsubscribeProducts) { unsubscribeProducts(); unsubscribeProducts = null; }
+    if (unsubscribeProducts) { unsubscribeProducts(); unsubscribeProducts = null; }
     renderProductList([]);
   }
 });
 
 // small safety: expose a debug object when running locally
-if(location.hostname==='localhost') window._labelDaze = { renderLabels, renderAllergens };
+if (location.hostname === 'localhost') window._labelDaze = { renderLabels, renderAllergens };
