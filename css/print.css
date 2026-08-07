@@ -1,6 +1,42 @@
-@media print{
-  body{color:#000;background:#fff}
-  .site-header,.site-footer,.btn{display:none}
-  .card{box-shadow:none;border-radius:0}
-  .container{padding:0}
+/* Premium print stylesheet for Label Daze */
+@media print {
+  body {
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .app-header,
+  .app-nav,
+  .app-footer,
+  .modal,
+  .btn,
+  .tab-header,
+  .product-controls,
+  .tab-panel:not(.printing) {
+    display: none !important;
+  }
+
+  .modal.printing {
+    position: static;
+    background: none;
+  }
+
+  .modal-content.printing {
+    box-shadow: none;
+    border-radius: 0;
+    max-height: none;
+  }
+
+  .label-print-area {
+    page-break-inside: avoid;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-label {
+    page-break-inside: avoid;
+    margin: 0 0 12mm 0;
+  }
 }
