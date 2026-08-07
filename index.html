@@ -52,8 +52,10 @@
         </div>
         <div class="header-right">
           <div class="user-section">
-            <span id="user-email" class="user-email"></span>
-            <button id="sign-out" class="btn btn-icon" title="Sign out">→</button>
+            <div id="user-info" class="hide">
+              <span id="welcome" class="user-email"></span>
+              <button id="sign-out" class="btn btn-icon" title="Sign out">→</button>
+            </div>
           </div>
         </div>
       </div>
@@ -93,7 +95,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h2 id="modal-title">Add Product</h2>
-            <button class="modal-close" data-close="product-modal">&times;</button>
+            <button type="button" class="modal-close" data-close="product-modal">&times;</button>
           </div>
           <form id="product-form" class="product-form">
             <div class="form-section">
@@ -175,8 +177,8 @@
           <p class="info-text">Select products to print labels in batch. Optimized for thermal label printers and iPhone.</p>
           <div id="batch-products" class="batch-list"></div>
           <div class="print-actions hide" id="print-actions">
-            <button id="print-selected" class="btn btn-primary">Print Selected</button>
-            <button id="clear-batch" class="btn">Clear Selection</button>
+            <button type="button" id="print-selected" class="btn btn-primary">Print Selected</button>
+            <button type="button" id="clear-batch" class="btn">Clear Selection</button>
           </div>
         </div>
       </section>
@@ -197,8 +199,8 @@
               <p id="logo-placeholder-text">No logo uploaded</p>
             </div>
             <input type="file" id="logo-upload" accept="image/*" class="hide">
-            <button id="upload-logo-btn" class="btn btn-primary" type="button">Upload Logo</button>
-            <button id="remove-logo-btn" class="btn btn-danger hide" type="button">Remove Logo</button>
+            <button type="button" id="upload-logo-btn" class="btn btn-primary">Upload Logo</button>
+            <button type="button" id="remove-logo-btn" class="btn btn-danger hide">Remove Logo</button>
           </div>
           <div class="brand-preview">
             <h3>Label Preview with Logo</h3>
@@ -223,8 +225,8 @@
         <div class="settings-section">
           <h3>Account</h3>
           <p id="settings-email"></p>
-          <button id="change-password-btn" class="btn">Change Password</button>
-          <button id="delete-account-btn" class="btn btn-danger">Delete Account</button>
+          <button type="button" id="change-password-btn" class="btn">Change Password</button>
+          <button type="button" id="delete-account-btn" class="btn btn-danger">Delete Account</button>
         </div>
       </section>
     </main>
