@@ -1,13 +1,16 @@
 /* Premium Label Daze Redesign - Mobile-first professional styling */
 :root {
   /* Premium color palette */
-  --bg-cream: #faf8f3;
-  --bg-light: #ffffff;
-  --text-dark: #2b2520;
-  --text-muted: #6b6359;
-  --accent-gold: #d4a574;
-  --accent-gold-dark: #b8915f;
-  --border-light: #e8e3db;
+  --bg-cream: #ffffff;
+--bg-light: #f5f8ff;
+--text-dark: #071a3d;
+--text-muted: #53657d;
+--accent-gold: #175cff;
+--accent-gold-dark: #0b3fa8;
+--border-light: #d7e2f3;
+  
+  
+
   --shadow-sm: 0 2px 4px rgba(43, 37, 32, 0.06);
   --shadow-md: 0 4px 12px rgba(43, 37, 32, 0.08);
   --shadow-lg: 0 8px 24px rgba(43, 37, 32, 0.1);
@@ -968,4 +971,54 @@ body {
   .form-actions .btn {
     width: 100%;
   }
+}
+
+
+/* Navy + Royal Blue + White override */
+body {
+  background: #ffffff !important;
+  color: #071a3d !important;
+}
+
+header,
+.app-header,
+.topbar,
+.navbar {
+  background: #071a3d !important;
+  color: #ffffff !important;
+}
+
+button,
+.btn,
+.button,
+.primary-button,
+.cta-button {
+  background: #175cff !important;
+  color: #ffffff !important;
+  border-color: #175cff !important;
+}
+
+button:hover,
+.btn:hover,
+.button:hover {
+  background: #0b3fa8 !important;
+  border-color: #0b3fa8 !important;
+}
+
+a {
+  color: #175cff !important;
+}
+
+.card,
+.panel,
+.modal,
+section {
+  border-color: #d7e2f3 !important;
+}
+
+.eyebrow,
+.kicker,
+.accent,
+.highlight {
+  color: #175cff !important;
 }
