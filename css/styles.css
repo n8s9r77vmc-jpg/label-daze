@@ -1063,3 +1063,46 @@ main,
 .auth-wrapper {
   background: #FFFFFF !important;
 }
+/* LABEL DAZE - NAVY / ROYAL BLUE / WHITE */
+
+:root {
+  --bg-cream: #FFFFFF !important;
+  --bg-light: #FFFFFF !important;
+  --text-dark: #0B1F3A !important;
+  --text-muted: #52657D !important;
+  --accent-gold: #0057FF !important;
+  --accent-gold-dark: #0B1F3A !important;
+  --border-light: #D9E2F2 !important;
+}
+
+body {
+  background: #FFFFFF !important;
+  color: #0B1F3A !important;
+}
+
+.topbar,
+.navbar,
+header {
+  background: #0B1F3A !important;
+}
+
+.eyebrow,
+.kicker,
+.accent,
+.highlight {
+  color: #0057FF !important;
+}
+
+button,
+.btn,
+.btn-primary {
+  background: #0057FF !important;
+  color: #FFFFFF !important;
+  border-color: #0057FF !important;
+}
+
+.card,
+.panel,
+section {
+  border-color: #D9E2F2 !important;
+}
