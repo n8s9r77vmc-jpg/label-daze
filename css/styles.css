@@ -1,13 +1,13 @@
 /* Premium Label Daze Redesign - Mobile-first professional styling */
 :root {
   /* Premium color palette */
-  -#ffffffff;
-  --bg-light: #Ob1f3a;
-  --text-dark: #52657d;
+  --bg-cream: #faf8f3;
+  --bg-light: #ffffff;
+  --text-dark: #2b2520;
   --text-muted: #6b6359;
-  --accent-gold: #1e5eff;
-  --accent-gold-dark: #1746c7;
-  --border-light: #d9e2f2;
+  --accent-gold: #d4a574;
+  --accent-gold-dark: #b8915f;
+  --border-light: #e8e3db;
   --shadow-sm: 0 2px 4px rgba(43, 37, 32, 0.06);
   --shadow-md: 0 4px 12px rgba(43, 37, 32, 0.08);
   --shadow-lg: 0 8px 24px rgba(43, 37, 32, 0.1);
