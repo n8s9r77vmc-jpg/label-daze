@@ -46,7 +46,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #faf8f3 0%, #f3ede3 100%);
+background: #FFFFFF !important;
   padding: 20px;
 }
 
