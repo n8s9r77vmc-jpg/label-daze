@@ -1056,3 +1056,10 @@ main,
 .content {
   background: #FFFFFF !important;
 }
+/* Force login/auth background to white */
+.auth-screen,
+.auth-container,
+.auth-card,
+.auth-wrapper {
+  background: #FFFFFF !important;
+}
