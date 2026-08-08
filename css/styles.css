@@ -1045,3 +1045,14 @@ button,
   color: #FFFFFF !important;
   border-color: #0057FF !important;
 }
+/* Remove remaining cream/beige */
+html,
+body,
+.app-shell,
+main,
+.main-content,
+.dashboard,
+.page,
+.content {
+  background: #FFFFFF !important;
+}
