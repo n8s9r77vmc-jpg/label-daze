@@ -254,7 +254,7 @@ function applyFiltersAndRender() {
 
   productList.innerHTML = '';
   if (filteredProducts.length === 0) {
-    productList.innerHTML = '<div class="empty-state"><p>No products found.</p></div>';
+    productList.innerHTML = '<div class="empty-state"><h3>Welcome to Label Daze! 👋</h3><p>You haven’t created any products yet.</p><p>Tap <strong>+ Add Product</strong> above to create your first product and start making labels.</p></div>';
     return;
   }
 
