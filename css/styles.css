@@ -1022,3 +1022,26 @@ section {
 .highlight {
   color: #175cff !important;
 }
+/* Label Daze colour override */
+:root {
+  --bg-cream: #FFFFFF;
+  --bg-light: #FFFFFF;
+  --text-dark: #0B1F3A;
+  --text-muted: #52657D;
+  --accent-gold: #1E5EFF;
+  --accent-gold-dark: #0B1F3A;
+  --border-light: #D9E2F2;
+}
+
+body {
+  background: #FFFFFF !important;
+  color: #0B1F3A !important;
+}
+
+button,
+.btn,
+.btn-primary {
+  background: #1E5EFF !important;
+  color: #FFFFFF !important;
+  border-color: #1E5EFF !important;
+}
