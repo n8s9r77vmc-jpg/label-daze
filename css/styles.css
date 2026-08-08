@@ -1028,7 +1028,7 @@ section {
   --bg-light: #FFFFFF;
   --text-dark: #0B1F3A;
   --text-muted: #52657D;
-  --accent-gold: #1E5EFF;
+  --accent-gold: #0057FF;
   --accent-gold-dark: #0B1F3A;
   --border-light: #D9E2F2;
 }
@@ -1041,7 +1041,7 @@ body {
 button,
 .btn,
 .btn-primary {
-  background: #1E5EFF !important;
+  background: #0057FF !important;
   color: #FFFFFF !important;
-  border-color: #1E5EFF !important;
+  border-color: #0057FF !important;
 }
